@@ -1,0 +1,2 @@
+adapt the tests from the application to be used on the separated module.
+make proper travis configuration to run it on postgres

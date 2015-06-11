@@ -1,0 +1,37 @@
+{
+  "name": "sequelize-accesstree",
+  "version": "0.0.1",
+  "description": "Tree structure with user access attributes stored in a database using sequelize",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha -r test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChaosGroup/dat.git"
+  },
+  "keywords": [
+    "access",
+    "authorization",
+    "sequelize",
+    "hierarchy",
+    "tree"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ChaosGroup/dat/issues"
+  },
+  "homepage": "https://github.com/ChaosGroup/dat#readme",
+  "dependencies": {
+    "lodash": "^3.9.3",
+    "sequelize": "^3.2.0",
+    "sequelize-hierarchy": "^0.4.0"
+  },
+  "devDependencies": {
+    "chai": "^3.0.0",
+    "co-mocha": "^1.1.0",
+    "jshint": "^2.8.0",
+    "mocha": "^2.2.5"
+  }
+}
