@@ -1,15 +1,19 @@
 'use strict';
+const Users = require('./Users');
 
-exports.Users = {
-	peter: 1,
-	george: 2,
-	ivan: 3,
-	malory: 4,
-	eve: 5
-};
+exports.init = function* (AccessTree, AccessTreeGrants) {
+	const nodes = {};
 
-exports.init = function* (AccessTree) {
-	AccessTree.create({
-
+	nodes.alpha = yield AccessTree.create({
+		name: 'Alpha',
+		type: 'folder',
+		AccessTreeGrants: [{
+			UserId: Users.peter,
+			role: 'CEO'
+		}]
+	}, {
+		include: {
+			model: AccessTreeGrants
+		}
 	});
 };
