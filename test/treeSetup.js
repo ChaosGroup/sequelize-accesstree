@@ -1,7 +1,7 @@
 'use strict';
 const Users = require('./Users');
 
-exports.init = function* (AccessTree, AccessTreeGrants) {
+module.exports = function* (AccessTree, AccessTreeGrant) {
 	const nodes = {};
 
 	nodes.alpha = yield AccessTree.create({
@@ -13,7 +13,9 @@ exports.init = function* (AccessTree, AccessTreeGrants) {
 		}]
 	}, {
 		include: {
-			model: AccessTreeGrants
+			model: AccessTreeGrant
 		}
 	});
+
+	return nodes;
 };
