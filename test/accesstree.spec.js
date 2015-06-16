@@ -73,9 +73,17 @@ describe('Access Tree with example model', function () {
 
 		let sales = beta.children[0];
 		expect(sales.name).to.equal('Sales');
-		console.log(sales.children);
 		expect(sales.AccessTreeGrants).to.be.an('array').with.length(1);
 
 		expect(sales.children).to.be.undefined;
+	});
+
+	it('returns folders with childcount', function* () {
+		let actual = yield AccessTree.childFolders(nodes.beta.id);
+
+		expect(actual).to.be.an('array').with.length(1);
+		console.log(JSON.stringify(actual));
+		expect(actual[0].id).to.equal(nodes.betaSales.id);
+		expect(actual[0].children).to.be.undefined;
 	});
 });
