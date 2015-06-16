@@ -43,36 +43,39 @@ describe('Access Tree with example model', function () {
 		expect(_.map(grants, 'UserId')).to.have.members([Users.eve, Users.peter]);
 	});
 
-	it('returns subtree and grants if both scopes are enabled', function* () {
-		//let tmp = AccessTree.scope('withgrants');
-		let beta = yield AccessTree.scope('withgrants').findOne({
-				where: {
-					id: nodes.beta.id
-				},
-				include: [
-					/*{
-						model: AccessTreeGrant,
-						as: 'AccessTreeGrants'
-					},*/ {
-						model: AccessTree.scope('withgrants'),
-						as: 'descendents',
-						hierarchy: true/*,
-						include: [
-							{
-								model: AccessTreeGrant,
-								as: 'AccessTreeGrants'
-							}
-						]*/
-					}
-				]
-			});
+	it('returns subtree with grants', function* () {
+		let beta = yield AccessTree.scope('fullChildTree').findOne({
+			where: {
+				id: nodes.beta.id
+			}
+		});
 
 		expect(beta.AccessTreeGrants).to.be.an('array').with.length(2);
 		expect(beta.children).to.be.an('array').with.length(1);
 
 		let sales = beta.children[0];
-		console.log(sales);
 		expect(sales.name).to.equal('Sales');
 		expect(sales.AccessTreeGrants).to.be.an('array').with.length(1);
+
+		expect(sales.children).to.be.an('array').with.length(1);
+	});
+
+
+	it('returns with direct children and grants', function* () {
+		let beta = yield AccessTree.scope('fullChildren').findOne({
+			where: {
+				id: nodes.beta.id
+			}
+		});
+
+		expect(beta.AccessTreeGrants).to.be.an('array').with.length(2);
+		expect(beta.children).to.be.an('array').with.length(1);
+
+		let sales = beta.children[0];
+		expect(sales.name).to.equal('Sales');
+		console.log(sales.children);
+		expect(sales.AccessTreeGrants).to.be.an('array').with.length(1);
+
+		expect(sales.children).to.be.undefined;
 	});
 });
