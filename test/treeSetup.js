@@ -73,6 +73,9 @@ module.exports = function* (AccessTree, AccessTreeGrant) {
 		}, {
 			UserId: Users.malory,
 			role: 'assistant'
+		}, {
+			UserId: Users.eve,
+			role: 'accountant'
 		}]
 	}, {
 		include: {
@@ -146,7 +149,15 @@ module.exports = function* (AccessTree, AccessTreeGrant) {
 	nodes.gamaSalesLondonNewYork = yield AccessTree.create({
 		name: 'london-newyork',
 		type: 'auction:seller',
-		parentId: nodes.gamaSalesAmericas.id
+		parentId: nodes.gamaSalesAmericas.id,
+		AccessTreeGrants: [{
+			UserId: Users.eve,
+			role: 'assistant'
+		}]
+	}, {
+		include: {
+			model: AccessTreeGrant
+		}
 	});
 
 	return nodes;
