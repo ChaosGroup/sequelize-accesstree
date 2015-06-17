@@ -78,7 +78,7 @@ describe('Access Tree with example model', function () {
 		expect(sales.children).to.be.undefined;
 	});
 
-	describe('#childcount', function () {
+	describe('#childFolders', function () {
 		it('returns betaSales with one child when asked for beta\'s children', function* () {
 			let actual = yield AccessTree.childFolders(nodes.beta.id);
 
@@ -96,5 +96,37 @@ describe('Access Tree with example model', function () {
 			expect(_.map(actual, 'subfolderCount')).to.have.members([0, 2]);
 			expect(_.map(actual, 'children')).to.have.members([undefined, undefined]);
 		});
+
+		it('returns no results for gamaSalesLondonCopenhagen', function* () {
+			let actual = yield AccessTree.childFolders(nodes.gamaSalesLondonCopenhagen.id);
+			expect(actual).to.be.an('array').with.length(0);
+		});
 	});
+
+	describe('#rolesFor', function () {
+		//TODO: write the tests
+	});
+
+	describe('rootId', function () {
+		it('is pointing to the tree root in all nodes when they are created', function* () {
+			let values = yield AccessTree.findAll({
+				where: {
+					parentId: null
+				},
+				include: [{
+					model: AccessTree,
+					as: 'descendents'
+				}]
+			});
+
+			expect(values).to.be.an('array').with.length(3);
+			values.forEach(function (root) {
+				expect(root.rootId).to.be.null;
+				expect(root.descendents).to.be.an('array');
+				root.descendents.forEach(function (descendant) {
+					expect(descendant.rootId).to.equal(root.id);
+				});
+			});
+		});
+	})
 });
