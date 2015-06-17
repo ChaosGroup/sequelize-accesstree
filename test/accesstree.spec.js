@@ -87,15 +87,16 @@ describe('Access Tree with example model', function () {
 			expect(actual[0].children).to.be.undefined;
 		});
 
-		it('returns gamaSales with one child and gamaProcurement with 0 children when asked for gama\'s children', function* () {
-			let actual = yield AccessTree.childFolders(nodes.gama.id);
+		it('returns gamaSales with one child and gamaProcurement with 0 children when asked for gama\'s children',
+			function* () {
+				let actual = yield AccessTree.childFolders(nodes.gama.id);
 
-			expect(actual).to.be.an('array').with.length(2);
+				expect(actual).to.be.an('array').with.length(2);
 
-			expect(_.map(actual, 'id')).to.have.members([nodes.gamaProcurement.id, nodes.gamaSales.id]);
-			expect(_.map(actual, 'subfolderCount')).to.have.members([0, 2]);
-			expect(_.map(actual, 'children')).to.have.members([undefined, undefined]);
-		});
+				expect(_.map(actual, 'id')).to.have.members([nodes.gamaProcurement.id, nodes.gamaSales.id]);
+				expect(_.map(actual, 'subfolderCount')).to.have.members([0, 2]);
+				expect(_.map(actual, 'children')).to.have.members([undefined, undefined]);
+			});
 
 		it('returns no results for gamaSalesLondonCopenhagen', function* () {
 			let actual = yield AccessTree.childFolders(nodes.gamaSalesLondonCopenhagen.id);
@@ -147,10 +148,12 @@ describe('Access Tree with example model', function () {
 				where: {
 					parentId: null
 				},
-				include: [{
-					model: AccessTree,
-					as: 'descendents'
-				}]
+				include: [
+					{
+						model: AccessTree,
+						as: 'descendents'
+					}
+				]
 			});
 
 			expect(values).to.be.an('array').with.length(3);
@@ -162,5 +165,39 @@ describe('Access Tree with example model', function () {
 				});
 			});
 		});
-	})
+	});
+
+	describe('#userRoots returns folders and \"files\" that are roots for the passed user', function () {
+		it('for george', function* () {
+			const actual = yield AccessTree.userRoots(Users.george);
+			expect(actual).to.be.an('array').with.length(2);
+			expect(_.map(actual, 'id')).to.have.members([nodes.beta.id, nodes.gama.id]);
+		});
+
+		it('for peter', function* () {
+			const actual = yield AccessTree.userRoots(Users.peter);
+			expect(actual).to.be.an('array').with.length(4);
+			expect(_.map(actual, 'id')).to.have
+				.members([nodes.alpha.id, nodes.betaSalesAmericas.id, nodes.gamaSales.id, nodes.gamaCarAuction.id]);
+		});
+
+		it('for ivan', function* () {
+			const actual = yield AccessTree.userRoots(Users.ivan);
+			expect(actual).to.be.an('array').with.length(2);
+			expect(_.map(actual, 'id')).to.have.members([nodes.betaSales.id, nodes.gamaProcurement.id]);
+		});
+
+		it('for eve', function* () {
+			const actual = yield AccessTree.userRoots(Users.eve);
+			expect(actual).to.be.an('array').with.length(2);
+			expect(_.map(actual, 'id')).to.have.members([nodes.betaSalesAmericas.id, nodes.gama.id]);
+		});
+
+		it('for malory', function* () {
+			const actual = yield AccessTree.userRoots(Users.malory);
+			expect(actual).to.be.an('array').with.length(2);
+			expect(_.map(actual, 'id')).to.have.members([nodes.beta.id, nodes.gama.id]);
+		});
+
+	});
 });
