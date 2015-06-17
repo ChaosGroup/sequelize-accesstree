@@ -127,6 +127,20 @@ describe('Access Tree with example model', function () {
 		});
 	});
 
+	describe('#mergedGrants', function () {
+		it('gives all users\' roles in gamaSalesLondonNewYork', function* () {
+			const actual = yield AccessTree.mergedGrants(nodes.gamaSalesLondonNewYork.id);
+			const expected = new Map();
+
+			expected.set(Users.peter, ['manager']);
+			expected.set(Users.george, ['manager']);
+			expected.set(Users.malory, ['assistant']);
+			expected.set(Users.eve, ['accountant', 'assistant']);
+
+			expect(actual).to.deep.equal(expected);
+		});
+	});
+
 	describe('rootId', function () {
 		it('is pointing to the tree root in all nodes when they are created', function* () {
 			let values = yield AccessTree.findAll({
