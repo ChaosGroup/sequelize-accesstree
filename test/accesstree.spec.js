@@ -104,7 +104,27 @@ describe('Access Tree with example model', function () {
 	});
 
 	describe('#rolesFor', function () {
-		//TODO: write the tests
+		it('gives peter\'s roles in gamaSalesLondonNewYork', function* () {
+			const actual = yield AccessTree.rolesFor(nodes.gamaSalesLondonNewYork.id, Users.peter);
+			console.log(actual);
+			expect(actual).to.have.members(['manager']);
+		});
+		it('gives george\'s roles in gamaSalesLondonNewYork', function* () {
+			const actual = yield AccessTree.rolesFor(nodes.gamaSalesLondonNewYork.id, Users.george);
+			expect(actual).to.have.members(['manager']);
+		});
+		it('gives ivan\'s roles in gamaSalesLondonNewYork', function* () {
+			const actual = yield AccessTree.rolesFor(nodes.gamaSalesLondonNewYork.id, Users.ivan);
+			expect(actual).to.have.members([]);
+		});
+		it('gives malory\'s roles in gamaSalesLondonNewYork', function* () {
+			const actual = yield AccessTree.rolesFor(nodes.gamaSalesLondonNewYork.id, Users.malory);
+			expect(actual).to.have.members(['assistant']);
+		});
+		it('gives eve\'s roles in gamaSalesLondonNewYork', function* () {
+			const actual = yield AccessTree.rolesFor(nodes.gamaSalesLondonNewYork.id, Users.eve);
+			expect(actual).to.have.members([]);
+		});
 	});
 
 	describe('rootId', function () {
