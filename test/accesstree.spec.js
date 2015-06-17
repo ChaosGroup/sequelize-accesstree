@@ -121,7 +121,7 @@ describe('Access Tree with example model', function () {
 			const actual = yield AccessTree.rolesFor(nodes.gamaSalesLondonNewYork.id, Users.malory);
 			expect(actual).to.have.members(['assistant']);
 		});
-		it.only('gives eve\'s roles in gamaSalesLondonNewYork', function* () {
+		it('gives eve\'s roles in gamaSalesLondonNewYork', function* () {
 			const actual = yield AccessTree.rolesFor(nodes.gamaSalesLondonNewYork.id, Users.eve);
 			expect(actual).to.have.members(['accountant', 'assistant']);
 		});
