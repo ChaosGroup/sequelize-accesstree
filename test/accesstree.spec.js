@@ -78,12 +78,23 @@ describe('Access Tree with example model', function () {
 		expect(sales.children).to.be.undefined;
 	});
 
-	it('returns folders with childcount', function* () {
-		let actual = yield AccessTree.childFolders(nodes.beta.id);
+	describe('#childcount', function () {
+		it('returns betaSales with one child when asked for beta\'s children', function* () {
+			let actual = yield AccessTree.childFolders(nodes.beta.id);
 
-		expect(actual).to.be.an('array').with.length(1);
-		console.log(JSON.stringify(actual));
-		expect(actual[0].id).to.equal(nodes.betaSales.id);
-		expect(actual[0].children).to.be.undefined;
+			expect(actual).to.be.an('array').with.length(1);
+			expect(actual[0].id).to.equal(nodes.betaSales.id);
+			expect(actual[0].children).to.be.undefined;
+		});
+
+		it('returns gamaSales with one child and gamaProcurement with 0 children when asked for gama\'s children', function* () {
+			let actual = yield AccessTree.childFolders(nodes.gama.id);
+
+			expect(actual).to.be.an('array').with.length(2);
+
+			expect(_.map(actual, 'id')).to.have.members([nodes.gamaProcurement.id, nodes.gamaSales.id]);
+			expect(_.map(actual, 'subfolderCount')).to.have.members([0, 2]);
+			expect(_.map(actual, 'children')).to.have.members([undefined, undefined]);
+		});
 	});
 });
