@@ -1,6 +1,6 @@
 {
   "name": "sequelize-accesstree",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Tree structure with user access attributes stored in a database using sequelize",
   "main": "lib/index.js",
   "scripts": {
