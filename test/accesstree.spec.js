@@ -217,4 +217,35 @@ describe('Access Tree with example model', function () {
 		});
 
 	});
+
+	describe('#addGrant', function () {
+		it('gives ivan\'s roles in gamaSalesLondonNewYork', function* () {
+			const ROLE = 'SpeciaL';
+			let result = yield AccessTree.addGrant(nodes.gamaSalesLondonNewYork.id, Users.ivan, ROLE);
+			const actual = yield AccessTree.rolesFor(nodes.gamaSalesLondonNewYork.id, Users.ivan);
+			expect(result).to.be.true;
+			expect(actual).to.have.members([ROLE]);
+		});
+	});
+
+	describe('#revokeGrant', function () {
+		const ROLE = 'SpeciaL';
+		beforeEach(function* () {
+			yield AccessTree.addGrant(nodes.gamaSalesLondonNewYork.id, Users.ivan, ROLE);
+		});
+
+		it('revokes ivan\'s roles in gamaSalesLondonNewYork', function* () {
+			let result = yield AccessTree.revokeGrant(nodes.gamaSalesLondonNewYork.id, Users.ivan, ROLE);
+			const actual = yield AccessTree.rolesFor(nodes.gamaSalesLondonNewYork.id, Users.ivan);
+			expect(result).to.be.true;
+			expect(actual).to.be.an('array').with.length(0);
+		});
+
+		it('revokes ivan\'s roles in gamaSalesLondonNewYork', function* () {
+			let result = yield AccessTree.revokeGrant(nodes.gamaSalesLondonNewYork.id, Users.eve, ROLE);
+			const actual = yield AccessTree.rolesFor(nodes.gamaSalesLondonNewYork.id, Users.eve);
+			expect(result).to.be.false;
+			expect(actual).to.have.members(['accountant', 'assistant']);
+		});
+	});
 });
