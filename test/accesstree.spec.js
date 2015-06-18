@@ -107,7 +107,6 @@ describe('Access Tree with example model', function () {
 	describe('#rolesFor', function () {
 		it('gives peter\'s roles in gamaSalesLondonNewYork', function* () {
 			const actual = yield AccessTree.rolesFor(nodes.gamaSalesLondonNewYork.id, Users.peter);
-			console.log(actual);
 			expect(actual).to.have.members(['manager']);
 		});
 		it('gives george\'s roles in gamaSalesLondonNewYork', function* () {
@@ -179,6 +178,20 @@ describe('Access Tree with example model', function () {
 			expect(actual).to.be.an('array').with.length(4);
 			expect(_.map(actual, 'id')).to.have
 				.members([nodes.alpha.id, nodes.betaSalesAmericas.id, nodes.gamaSales.id, nodes.gamaCarAuction.id]);
+		});
+
+		it('for peter as manager', function* () {
+			const actual = yield AccessTree.userRoots(Users.peter, ['manager']);
+			expect(actual).to.be.an('array').with.length(2);
+			expect(_.map(actual, 'id')).to.have
+				.members([nodes.alpha.id, nodes.gamaSales.id]);
+		});
+
+		it('for peter as manager and/or admin', function* () {
+			const actual = yield AccessTree.userRoots(Users.peter, ['manager', 'admin']);
+			expect(actual).to.be.an('array').with.length(3);
+			expect(_.map(actual, 'id')).to.have
+				.members([nodes.alpha.id, nodes.betaSalesAmericas.id, nodes.gamaSales.id]);
 		});
 
 		it('for ivan', function* () {
