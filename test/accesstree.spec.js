@@ -125,6 +125,10 @@ describe('Access Tree with example model', function () {
 			const actual = yield AccessTree.rolesFor(nodes.gamaSalesLondonNewYork.id, Users.eve);
 			expect(actual).to.have.members(['accountant', 'assistant']);
 		});
+		it('gives peters roles for non-existing reference', function* () {
+			const actual = yield AccessTree.rolesFor(7357, Users.peter);
+			expect(actual).to.be.an('array').with.length(0);
+		});
 	});
 
 	describe('#mergedGrants', function () {
