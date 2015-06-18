@@ -27,7 +27,7 @@
     "co": "^4.5.4",
     "lodash": "^3.9.3",
     "sequelize": "^3.2.0",
-    "sequelize-hierarchy": "https://github.com/vbogdanov/sequelize-hierarchy"
+    "sequelize-hierarchy": "https://github.com/overlookmotel/sequelize-hierarchy"
   },
   "devDependencies": {
     "bluebird": "^2.9.27",
