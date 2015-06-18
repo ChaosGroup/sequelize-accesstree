@@ -143,6 +143,12 @@ describe('Access Tree with example model', function () {
 
 			expect(actual).to.deep.equal(expected);
 		});
+
+		it('handles fake folders by returning empty map', function* () {
+			const actual = yield AccessTree.mergedGrants(7357);
+			const expected = new Map();
+			expect(actual).to.deep.equal(expected);
+		});
 	});
 
 	describe('rootId', function () {
