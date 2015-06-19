@@ -116,7 +116,7 @@ module.exports = function* (AccessTree, AccessTreeGrant) {
 
 	nodes.gamaCarAuction = yield AccessTree.create({
 		name: 'car',
-		type: 'auction:buyer',
+		type: 'filetype1',
 		parentId: nodes.gama.id,
 		AccessTreeGrants: [
 			{
@@ -128,25 +128,25 @@ module.exports = function* (AccessTree, AccessTreeGrant) {
 
 	nodes.gamaOfficeAuction = yield AccessTree.create({
 		name: 'oldOffice',
-		type: 'auction:seller',
+		type: 'filetype2',
 		parentId: nodes.gama.id
 	});
 
 	nodes.gamaSalesLondonParis = yield AccessTree.create({
 		name: 'london-paris',
-		type: 'auction:seller',
+		type: 'filetype2',
 		parentId: nodes.gamaSales.id
 	});
 
 	nodes.gamaSalesLondonCopenhagen = yield AccessTree.create({
 		name: 'london-copenhagen',
-		type: 'auction:seller',
+		type: 'filetype2',
 		parentId: nodes.gamaSales.id
 	});
 
 	nodes.gamaSalesLondonNewYork = yield AccessTree.create({
 		name: 'london-newyork',
-		type: 'auction:seller',
+		type: 'filetype2',
 		parentId: nodes.gamaSalesAmericas.id,
 		AccessTreeGrants: [
 			{

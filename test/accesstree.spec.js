@@ -104,6 +104,14 @@ describe('Access Tree with example model', function () {
 		});
 	});
 
+	describe('#authzDetailsFor', function () {
+		it('gives peter\'s roles in gamaSalesLondonNewYork', function* () {
+			const actual = yield AccessTree.authzDetailsFor(nodes.gamaSalesLondonNewYork.id, Users.peter);
+			expect(actual.roles).to.have.members(['manager']);
+			expect(actual.type).to.equal('filetype2');
+		});
+	});
+
 	describe('#rolesFor', function () {
 		it('gives peter\'s roles in gamaSalesLondonNewYork', function* () {
 			const actual = yield AccessTree.rolesFor(nodes.gamaSalesLondonNewYork.id, Users.peter);
