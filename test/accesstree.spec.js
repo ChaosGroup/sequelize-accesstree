@@ -232,6 +232,33 @@ describe('Access Tree with example model', function () {
 
 	});
 
+	describe('#userRootPath returns array of ids - path from user root to this reference', function () {
+
+		it('for george', function* () {
+			const actual = yield AccessTree.userRootPath(Users.george, nodes.gamaSalesLondonNewYork.id);
+			expect(actual).to.be.an('array').with.length(3);
+			expect(actual).to.deep.equal([nodes.gama.id, nodes.gamaSales.id, nodes.gamaSalesAmericas.id]);
+		});
+
+		it('for peter', function* () {
+			const actual = yield AccessTree.userRootPath(Users.peter, nodes.gamaSalesLondonNewYork.id);
+			expect(actual).to.be.an('array').with.length(2);
+			expect(actual).to.deep.equal([nodes.gamaSales.id, nodes.gamaSalesAmericas.id]);
+		});
+
+		it('for eve as any', function* () {
+			const actual = yield AccessTree.userRootPath(Users.eve, nodes.gamaSalesLondonNewYork.id);
+			expect(actual).to.be.an('array').with.length(3);
+			expect(actual).to.deep.equal([nodes.gama.id, nodes.gamaSales.id, nodes.gamaSalesAmericas.id]);
+		});
+
+		it('for eve as assistant', function* () {
+			const actual = yield AccessTree.userRootPath(Users.eve, nodes.gamaSalesLondonNewYork.id, ['assistant']);
+			expect(actual).to.be.an('array').with.length(0);
+			expect(actual).to.deep.equal([]);
+		});
+	});
+
 	describe('#addGrant', function () {
 		it('gives ivan\'s roles in gamaSalesLondonNewYork', function* () {
 			const ROLE = 'SpeciaL';
