@@ -175,7 +175,7 @@ describe('Access Tree with example model', function () {
 
 			expect(values).to.be.an('array').with.length(3);
 			values.forEach(function (root) {
-				expect(root.rootId).to.be.null;
+				expect(root.rootId).to.equal(root.id);
 				expect(root.descendents).to.be.an('array');
 				root.descendents.forEach(function (descendant) {
 					expect(descendant.rootId).to.equal(root.id);
